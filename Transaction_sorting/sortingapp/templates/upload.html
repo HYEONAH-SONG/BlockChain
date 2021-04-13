@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html> 
+    <head><title>Upload Test</title></head> 
+    <body> 
+        <h1> Transaction Sorting System</h1>
+        <br>
+
+        <form action='{% url "sorting" %}' method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+             {{form.as_p}}
+            {% comment %} 제목 <br>
+            <input type="text" name="title"> <br> {% endcomment %}
+            체인코드 업로드 => <input type="file" name="func_file"><br>
+            <br>
+
+            <input type="submit" value="Submit" />
+        </form>
+    </body> 
+</html> 

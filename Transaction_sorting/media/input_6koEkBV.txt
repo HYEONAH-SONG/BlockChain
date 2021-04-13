@@ -1,0 +1,82 @@
+func (s *SmartContract) getMusic(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+   musicAsBytes, err := APIstub.GetState(args[0])
+   if err != nil {
+         fmt.Println(err.Error())
+   }
+
+   music := Music{}
+   json.Unmarshal(musicAsBytes, &music)
+
+   var buffer bytes.Buffer
+   buffer.WriteString("[")
+   bArrayMemberAlreadyWritten := false
+
+   if bArrayMemberAlreadyWritten == true {
+         buffer.WriteString(",")
+   }
+   buffer.WriteString("{\"Title\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Title)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Singer\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Singer)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Price\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Price)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"WalletID\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.WalletID)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Count\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Count)
+   buffer.WriteString("\"")
+
+   buffer.WriteString("}")
+   bArrayMemberAlreadyWritten = true
+   buffer.WriteString("]\n")
+
+   return shim.Success(buffer.Bytes())
+}
+func (s *SmartContract) changeMusicPrice(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+    if len(args) != 2 {
+        return shim.Error("Incorrect number of arguments. Expecting 2")
+    }
+    musicbytes, err := APIstub.GetState(args[0])
+    if err != nil {
+        return shim.Error("Could not locate music")
+    }
+    music := Music{}
+    json.Unmarshal(musicbytes, &music)
+    
+    music.Price = args[1]
+    musicbytes, _ = json.Marshal(music)
+    err2 := APIstub.PutState(args[0], musicbytes)
+    if err2 != nil {
+        return shim.Error(fmt.Sprintf("Failed to change music price: %s", args[0]))
+    }
+    return shim.Success(nil)
+}
+func (s *SmartContract) deleteMusic(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+    if len(args) != 1 {
+        return shim.Error("Incorrect number of arguments. Expecting 1")
+    }
+
+    A := args[0]
+
+    // Delete the key from the state in ledger
+    err := APIstub.DelState(A)
+    if err != nil {
+        return shim.Error("Failed to delete state")
+    }
+
+    return shim.Success(nil)
+}
