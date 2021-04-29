@@ -1,0 +1,90 @@
+{
+    "cost1": {
+        "function1": {
+            "code_line_cost": "1",
+            "control_statement_cost": "0",
+            "data_process_cost": "0"
+        },
+        "function2": {
+            "code_line_cost": "1",
+            "control_statement_cost": "0",
+            "data_process_cost": "0"
+        }
+    },
+    "cost2": {
+        "function3": {
+            "code_line_cost": "1",
+            "control_statement_cost": "1",
+            "data_process_cost": "0"
+        }
+    },
+    "cost3": {
+        "function4": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "0"
+        }
+    },
+    "cost5": {
+        "function5": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "2"
+        },
+        "function6": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "2"
+        }
+    },
+    "cost6": {
+        "function7": {
+            "code_line_cost": "2",
+            "control_statement_cost": "2",
+            "data_process_cost": "2"
+        }
+    },
+    "cost7": {
+        "function8": {
+            "code_line_cost": "1",
+            "control_statement_cost": "3",
+            "data_process_cost": "3"
+        },
+        "function9": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "4"
+        }
+    },
+    "cost8": {
+        "function10": {
+            "code_line_cost": "1",
+            "control_statement_cost": "4",
+            "data_process_cost": "3"
+        },
+        "function11": {
+            "code_line_cost": "1",
+            "control_statement_cost": "3",
+            "data_process_cost": "4"
+        },
+        "function12": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "5"
+        }
+    },
+    "cost10": {
+        "function13": {
+            "code_line_cost": "1",
+            "control_statement_cost": "9",
+            "data_process_cost": "0"
+        }
+    },
+    "cost20": {
+        "function14": {
+            "code_line_cost": "2",
+            "control_statement_cost": "6",
+            "data_process_cost": "12"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+func (s *SmartContract)setWallet(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+   if len(args) != 3 {
+         return shim.Error("Incorrect number of arguments. Expecting 3")
+   }
+   var wallet = Wallet{Name: args[0], ID: args[1], Token:  args[2]}
+   json.Unmarshal(musickeyAsBytes, &musickey)
+   WalletasJSONBytes, _ := json.Marshal(wallet)
+   err := APIstub.PutState(wallet.ID, WalletasJSONBytes)
+   if err != nil {
+         return shim.Error("Failed to create asset " + wallet.Name)
+   }
+   return shim.Success(nil)
+}
+

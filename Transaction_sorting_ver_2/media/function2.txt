@@ -1,0 +1,21 @@
+func (s *SmartContract)initWallet(APIstub shim.ChaincodeStubInterface) pb.Response {
+
+   //Declare wallets
+   seller := Wallet{Name: "Hyper", ID: "1Q2W3E4R", Token: "100"}
+   customer := Wallet{Name: "Ledger", ID: "5T6Y7U8I", Token: "200"}
+
+   // Convert seller to []byte
+   SellerasJSONBytes, _ := json.Marshal(seller)
+   err := APIstub.PutState(seller.ID, SellerasJSONBytes)
+   if err != nil {
+      return shim.Error("Failed to create asset " + seller.Name)
+   }
+   // Convert customer to []byte
+   CustomerasJSONBytes, _ := json.Marshal(customer)
+   err = APIstub.PutState(customer.ID, CustomerasJSONBytes)
+   if err != nil {
+      return shim.Error("Failed to create asset " + customer.Name)
+   }
+
+   return shim.Success(nil)
+}

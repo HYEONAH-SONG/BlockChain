@@ -1,0 +1,29 @@
+func generateKey(APIstub shim.ChaincodeStubInterface, key string) []byte {
+
+   var isFirst bool = false
+
+   musickeyAsBytes, err := APIstub.GetState(key)
+   if err != nil {
+      fmt.Println(err.Error())
+   }
+
+   musickey := MusicKey{}
+   json.Unmarshal(musickeyAsBytes, &musickey)
+   var tempIdx string
+   tempIdx = strconv.Itoa(musickey.Idx)
+   fmt.Println(musickey)
+   fmt.Println("Key is " + strconv.Itoa(len(musickey.Key)))
+   if len(musickey.Key) == 0 || musickey.Key == "" {
+      isFirst = true
+      musickey.Key = "MS"
+   }
+   if !isFirst {
+      musickey.Idx = musickey.Idx + 1
+   }
+
+   fmt.Println("Last MusicKey is " + musickey.Key + " : " + tempIdx)
+
+   returnValueBytes, _ := json.Marshal(musickey)
+
+   return returnValueBytes
+}

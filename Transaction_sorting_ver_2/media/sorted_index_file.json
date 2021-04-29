@@ -1,0 +1,71 @@
+{
+    "cost3": {
+        "deleteMusic": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "0"
+        }
+    },
+    "cost5": {
+        "getMusic": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "2"
+        }
+    },
+    "cost6": {
+        "getWallet": {
+            "code_line_cost": "2",
+            "control_statement_cost": "2",
+            "data_process_cost": "2"
+        },
+        "setWallet": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "3"
+        }
+    },
+    "cost7": {
+        "generateKey": {
+            "code_line_cost": "1",
+            "control_statement_cost": "3",
+            "data_process_cost": "3"
+        },
+        "initWallet": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "4"
+        }
+    },
+    "cost8": {
+        "getAllMusic": {
+            "code_line_cost": "1",
+            "control_statement_cost": "4",
+            "data_process_cost": "3"
+        },
+        "changeMusicPrice": {
+            "code_line_cost": "1",
+            "control_statement_cost": "3",
+            "data_process_cost": "4"
+        },
+        "setMusic": {
+            "code_line_cost": "1",
+            "control_statement_cost": "2",
+            "data_process_cost": "5"
+        }
+    },
+    "cost11": {
+        "Invoke": {
+            "code_line_cost": "1",
+            "control_statement_cost": "10",
+            "data_process_cost": "0"
+        }
+    },
+    "cost20": {
+        "purchaseMusic": {
+            "code_line_cost": "2",
+            "control_statement_cost": "6",
+            "data_process_cost": "12"
+        }
+    }
+}
