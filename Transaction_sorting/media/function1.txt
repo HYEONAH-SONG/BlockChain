@@ -1,0 +1,39 @@
+func (s *SmartContract)Invoke(APIstub shim.ChaincodeStubInterface) pb.Response {
+   function, args := APIstub.GetFunctionAndParameters()
+   
+   if function == "initWallet" {
+         return s.initWallet(APIstub)
+   } else if function == "getWallet" {
+         return s.getWallet(APIstub, args)
+   } else if function == "setWallet" {
+         return s.setWallet(APIstub, args)
+   } else if function == "getMusic" {
+         return s.getMusic(APIstub, args)
+   } else if function == "setMusic" {
+         return s.setMusic(APIstub, args)
+   } else if function == "getAllMusic" {
+         return s.getAllMusic(APIstub)
+   } else if function == "purchaseMusic" {
+         return s.purchaseMusic(APIstub, args)
+   } else if function == "changeMusicPrice" {
+         return s.changeMusicPrice(APIstub, args)
+   } else if function == "deleteMusic" {
+         return s.deleteMusic(APIstub, args)
+   }
+   fmt.Println("Please check your function : " + function)
+   return shim.Error("Unknown function")
+}
+
+
+func main() {
+
+   err := shim.Start(new(SmartContract))
+   if err != nil {
+      fmt.Printf("Error starting Simple chaincode: %s", err)
+   }
+}
+type Wallet struct {
+   Name string `json:"name"`
+   ID   string `json:"id"`
+   Token string `json:"token"`
+}

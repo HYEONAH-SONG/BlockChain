@@ -1,0 +1,73 @@
+func (s *SmartContract)purchaseMusic(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+   var tokenFromKey, tokenToKey int // Asset holdings
+   var musicprice int // Transaction value
+   var musiccount int
+   var err error
+
+   if len(args) != 2 {
+      return shim.Error("Incorrect number of arguments. Expecting 2")
+   }
+
+   musicAsBytes, err := APIstub.GetState(args[1])
+   if err != nil {
+      return shim.Error(err.Error())
+   }
+
+   music := Music{}
+   json.Unmarshal(musicAsBytes, &music)
+   musicprice, _ = strconv.Atoi(music.Price)
+   musiccount, _ = strconv.Atoi(music.Count)
+
+   SellerAsBytes, err := APIstub.GetState(music.WalletID)
+   if err != nil {
+      return shim.Error("Failed to get state")
+   }
+   if SellerAsBytes == nil {
+      return shim.Error("Entity not found")
+   }
+   seller := Wallet{}
+   json.Unmarshal(SellerAsBytes, &seller)
+   tokenToKey, _ = strconv.Atoi(seller.Token)
+
+   CustomerAsBytes, err := APIstub.GetState(args[0])
+   if err != nil {
+      return shim.Error("Failed to get state")
+   }
+   if CustomerAsBytes == nil {
+      return shim.Error("Entity not found")
+   }
+
+   customer := Wallet{}
+   json.Unmarshal(CustomerAsBytes, &customer)
+   tokenFromKey, _ = strconv.Atoi(string(customer.Token))
+
+   customer.Token = strconv.Itoa(tokenFromKey - musicprice)
+   seller.Token = strconv.Itoa(tokenToKey + musicprice)
+   music.Count = strconv.Itoa(musiccount + 1)
+   updatedCustomerAsBytes, _ := json.Marshal(customer)
+   updatedSellerAsBytes, _ := json.Marshal(seller)
+   updatedMusicAsBytes, _ := json.Marshal(music)
+   APIstub.PutState(args[0], updatedCustomerAsBytes)
+   APIstub.PutState(music.WalletID, updatedSellerAsBytes)
+   APIstub.PutState(args[1], updatedMusicAsBytes)
+
+   // buffer is a JSON array containing QueryResults
+   var buffer bytes.Buffer
+   buffer.WriteString("[")
+
+   buffer.WriteString("{\"Customer Token\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(customer.Token)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Seller Token\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(seller.Token)
+   buffer.WriteString("\"")
+
+   buffer.WriteString("}")
+   buffer.WriteString("]\n")
+
+   return shim.Success(buffer.Bytes())
+}
+

@@ -22,5 +22,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', sortingapp.views.upload, name='upload_file'), # 127.0.0.1 접속
-    path('show/',sortingapp.views.upload_file, name='sorting'), # 정렬된 내용을 보여주는 url
+    path('show/',sortingapp.views.upload_file, name='indexing'), # 정렬된 내용을 보여주는 url
+    path('show2/',sortingapp.views.sorting_func, name= 'sorting'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

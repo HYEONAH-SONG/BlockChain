@@ -20,11 +20,11 @@
         }
         section{
             float:left;
-            width: 30%;
-            margin: 1.5%;
+            margin-left: 200px;
+            padding: 40px;
             border:solid 2px black;
             background-color: white;
-            font-size: xx-large
+            font-size: x-large
         }
         section h3{
             text-align: center;
@@ -43,32 +43,32 @@
 
 <body style="background-color:white;">
     <header>
-        <h1>Smart Contract Function Sorting System</h1>
+        <h1>Calculating Functions Cost</h1>
     </header>
 
     <section id = "s1">
         <ul>
-            <h3>{{func_name1}}</h3>
+            <h3>function #1</h3>
             <li>code line cost: {{code_line1}}</li>
-            <li>control statement cost: {{iteration1}}</li>
+            <li>iteration cost: {{iteration1}}</li>
             <li>data process cost: {{data_cost1}}</li>
             <li style="color: red;">total cost: {{total_cost1}} </li>
         </ul>
     </section>
     <section id = "s2">
         <ul>
-            <h3>{{func_name2}}</h3>
+            <h3>function #2</h3>
             <li>code line cost: {{code_line2}}</li>
-            <li>control statement cost: {{iteration2}}</li>
+            <li>iteration cost: {{iteration2}}</li>
             <li>data process cost: {{data_cost2}}</li>
             <li style="color: red;">total cost: {{total_cost2}}</li>
         </ul>
    </section>
    <section id = "s3">
         <ul>
-            <h3>{{func_name3}}</h3>
+            <h3>function #3</h3>
             <li>code line cost: {{code_line3}}</li>
-            <li>control statement cost: {{iteration3}}</li>
+            <li>iteration cost: {{iteration3}}</li>
             <li>data process cost: {{data_cost3}}</li>
             <li style="color: red;">total cost: {{total_cost3}} </li>
         </ul>
@@ -80,31 +80,32 @@
     <h1><i class="material-icons">south</i>&nbsp;&nbsp;   Sorted Functions</h1>
          <section id = "s4">
             <ul>
-                <h3>{{first_fun}}</h3>
+                <h3>function #{{first_fun}}</h3>
                 <li>code line cost: {{sorted_third_line}}</li>
-                <li>control statement cost: {{sorted_third_iteration}}</li>
+                <li>iteration cost: {{sorted_third_iteration}}</li>
                 <li>data process cost: {{sorted_third_data}}</li>
                 <li style="color: red;">total cost: {{sorted_third_total}} </li>
             </ul>
         </section>
         <section id = "s5">
             <ul>
-                <h3>{{second_fun}}</h3>
+                <h3>function #{{second_fun}}</h3>
                 <li>code line cost: {{sorted_second_line}}</li>
-                <li>control statement cost: {{sorted_second_iteration}}</li>
+                <li>iteration cost: {{sorted_second_iteration}}</li>
                 <li>data process cost: {{sorted_second_data}}</li>
                 <li style="color: red;">total cost: {{sorted_second_total}}</li>
             </ul>
        </section>
        <section id = "s6">
             <ul>
-                <h3>{{third_fun}}</h3>
+                <h3>function #{{third_fun}}</h3>
                 <li>code line cost: {{sorted_first_line}}</li>
-                <li>control statement cost: {{sorted_first_iteration}}</li>
+                <li>iteration cost: {{sorted_first_interation}}</li>
                 <li>data process cost: {{sorted_first_data}}</li>
                 <li style="color: red;">total cost: {{sorted_first_total}} </li>
             </ul>
         </section>
+        <!-- <img src="다람쥐.jpg" alt=""> -->
     </footer>
 </body>
 </html>

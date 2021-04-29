@@ -1,0 +1,48 @@
+func (s *SmartContract)getMusic(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+   musicAsBytes, err := APIstub.GetState(args[0])
+   if err != nil {
+         fmt.Println(err.Error())
+   }
+
+   music := Music{}
+   json.Unmarshal(musicAsBytes, &music)
+
+   var buffer bytes.Buffer
+   buffer.WriteString("[")
+   bArrayMemberAlreadyWritten := false
+
+   if bArrayMemberAlreadyWritten == true {
+         buffer.WriteString(",")
+   }
+   buffer.WriteString("{\"Title\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Title)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Singer\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Singer)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Price\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Price)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"WalletID\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.WalletID)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Count\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(music.Count)
+   buffer.WriteString("\"")
+
+   buffer.WriteString("}")
+   bArrayMemberAlreadyWritten = true
+   buffer.WriteString("]\n")
+
+   return shim.Success(buffer.Bytes())
+}

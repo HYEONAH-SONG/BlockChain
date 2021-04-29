@@ -1,0 +1,26 @@
+func (s *SmartContract)setMusic(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+   if len(args) != 4 {
+      return shim.Error("Incorrect number of arguments. Expecting 4")
+   }
+   
+   var musickey = MusicKey{}
+   json.Unmarshal(generateKey(APIstub, "latestKey"), &musickey)
+   keyidx := strconv.Itoa(musickey.Idx)
+   fmt.Println("Key : " + musickey.Key + ", Idx : " + keyidx)
+
+   var music = Music{Title: args[0], Singer: args[1], Price: args[2], WalletID: args[3], Count: "0"}
+   musicAsJSONBytes, _ := json.Marshal(music)
+
+   var keyString = musickey.Key + keyidx
+   fmt.Println("musickey is " + keyString)
+
+   err := APIstub.PutState(keyString, musicAsJSONBytes)
+   if err != nil {
+      return shim.Error(fmt.Sprintf("Failed to record music catch: %s", musickey))
+   }
+
+   musickeyAsBytes, _ := json.Marshal(musickey)
+   APIstub.PutState("latestKey", musickeyAsBytes)
+
+   return shim.Success(nil)
+}

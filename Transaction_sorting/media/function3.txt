@@ -1,0 +1,51 @@
+func (s *SmartContract)getWallet(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+   walletAsBytes, err := APIstub.GetState(args[0])
+   if err != nil {
+      fmt.Println(err.Error())
+   }
+
+   wallet := Wallet{}
+   json.Unmarshal(walletAsBytes, &wallet)
+
+   var buffer bytes.Buffer
+   buffer.WriteString("[")
+   bArrayMemberAlreadyWritten := false
+
+   if bArrayMemberAlreadyWritten == true {
+      buffer.WriteString(",")
+   }
+   buffer.WriteString("{\"Name\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(wallet.Name)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"ID\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(wallet.ID)
+   buffer.WriteString("\"")
+
+   buffer.WriteString(", \"Token\":")
+   buffer.WriteString("\"")
+   buffer.WriteString(wallet.Token)
+   buffer.WriteString("\"")
+
+   buffer.WriteString("}")
+   bArrayMemberAlreadyWritten = true
+   buffer.WriteString("]\n")
+
+   return shim.Success(buffer.Bytes())
+
+}
+type Music struct {
+   Title    string `json:"title"`
+   Singer   string `json:"singer"`
+   Price    string `json:"price"`
+   WalletID    string `json:"walletid"`
+   Count        string `json:"count"`
+}
+
+type MusicKey struct {
+   Key string
+   Idx int
+}

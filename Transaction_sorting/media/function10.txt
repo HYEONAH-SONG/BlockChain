@@ -1,0 +1,19 @@
+func (s *SmartContract)changeMusicPrice(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
+    if len(args) != 2 {
+        return shim.Error("Incorrect number of arguments. Expecting 2")
+    }
+    musicbytes, err := APIstub.GetState(args[0])
+    if err != nil {
+        return shim.Error("Could not locate music")
+    }
+    music := Music{}
+    json.Unmarshal(musicbytes, &music)
+    
+    music.Price = args[1]
+    musicbytes, _ = json.Marshal(music)
+    err2 := APIstub.PutState(args[0], musicbytes)
+    if err2 != nil {
+        return shim.Error(fmt.Sprintf("Failed to change music price: %s", args[0]))
+    }
+    return shim.Success(nil)
+}

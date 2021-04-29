@@ -1,0 +1,45 @@
+func (s *SmartContract)getAllMusic(APIstub shim.ChaincodeStubInterface) pb.Response {
+   
+   // Find latestKey
+   musickeyAsBytes, _ := APIstub.GetState("latestKey")
+   musickey := MusicKey{}
+   json.Unmarshal(musickeyAsBytes, &musickey)
+   idxStr := strconv.Itoa(musickey.Idx + 1)
+
+   var startKey = "MS0"
+   var endKey = musickey.Key + idxStr
+   fmt.Println(startKey)
+   fmt.Println(endKey)
+
+   resultsIter, err := APIstub.GetStateByRange(startKey, endKey)
+   if err != nil {
+      return shim.Error(err.Error())
+   }
+   defer resultsIter.Close()
+   
+   var buffer bytes.Buffer
+   buffer.WriteString("[")
+   bArrayMemberAlreadyWritten := false
+   for resultsIter.HasNext() {
+      queryResponse, err := resultsIter.Next()
+      if err != nil {
+         return shim.Error(err.Error())
+      }
+      
+      if bArrayMemberAlreadyWritten == true {
+         buffer.WriteString(",")
+      }
+      buffer.WriteString("{\"Key\":")
+      buffer.WriteString("\"")
+      buffer.WriteString(queryResponse.Key)
+      buffer.WriteString("\"")
+      
+      buffer.WriteString(", \"Record\":")
+      
+      buffer.WriteString(string(queryResponse.Value))
+      buffer.WriteString("}")
+      bArrayMemberAlreadyWritten = true
+   }
+   buffer.WriteString("]\n")
+   return shim.Success(buffer.Bytes())
+}
